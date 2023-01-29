@@ -1,4 +1,5 @@
 const Sample = ({ loadingPost, loadingUsers, post, users }) => {
+  console.log('Sample 컴포넌트에서 받은 데이터',post,users,'loadingPost, loadingUsers',loadingPost, loadingUsers)
   return (
     <div>
       <section>

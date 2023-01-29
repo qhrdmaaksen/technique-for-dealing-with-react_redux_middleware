@@ -1,8 +1,7 @@
 // 액션 타입을 선언
 // 한 요청당 세 개를 만듦
-import axios from "axios";
-import * as api from "./sample";
-import { handleActions } from "redux-actions";
+import * as api from "../lib/api";
+import {handleActions} from "redux-actions";
 
 const GET_POST = "sample/GET_POST";
 const GET_POST_SUCCESS = 'sample/GET"_POST"_SUCCESS';
@@ -22,6 +21,7 @@ export const getPost = (id) => async (dispatch) => {
       type: GET_POST_SUCCESS,
       payload: response.data,
     }); // 요청 성공
+    console.log('GET POST 비동기 함수 응답받은 데이터',response.data)
   } catch (e) {
     dispatch({
       type: GET_POST_FAILURE,
@@ -40,6 +40,7 @@ export const getUsers = (id) => async (dispatch) => {
       type: GET_USERS_SUCCESS,
       payload: response.data,
     }); // 요청 성공
+    console.log('GET USERS 비동기 함수 응답받은 데이터',response.data)
   } catch (e) {
     dispatch({
       type: GET_USERS_FAILURE,

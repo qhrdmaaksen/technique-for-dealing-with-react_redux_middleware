@@ -17,13 +17,13 @@ const SampleContainer = ({
     getPost(1);
     getUsers(1);
   }, [getPost, getUsers]);
-
+  console.log('SampleContainer 컴포넌트에서 받은 데이터',post,users,'loadingPost, loadingUsers',loadingPost, loadingUsers)
   return (
     <Sample
       post={post}
       users={users}
       loadingPost={loadingPost}
-      loadingUers={loadingUsers}
+      loadingUsers={loadingUsers}
     />
   );
 };
