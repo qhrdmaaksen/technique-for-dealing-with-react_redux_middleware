@@ -59,6 +59,13 @@ export const getUsers = (id) => async (dispatch) => {
 
 // 초기 상태를 선언
 // 요청의 로딩 중 상태는 loading 이라는 객체에서 관리
+
+const initialState = {
+  post: null,
+  users: null,
+}
+
+/* 로딩에 대한 초기 상태를 따로 modules/loading 에서 관리하므로 아래와 같이 작성할 필요가 없어졌음
 const initialState = {
   loading: {
     GET_POST: false,
@@ -66,8 +73,20 @@ const initialState = {
   },
   post: null,
   users: null,
-};
+};*/
 
+const sample = handleActions({
+  [GET_POST_SUCCESS]: (state, action) => ({
+    ...state,
+    post: action.payload
+  }),
+  [GET_USERS_SUCCESS]: (state, action) => ({
+    ...state,
+    users: action.payload
+  })
+})
+
+/* loading 액션 생성 함수를 modules/loading 에서 관리하므로 아래와 같이 작성할 필요가 없어졌음
 const sample = handleActions(
   {
     [GET_POST]: (state) => ({
@@ -116,6 +135,6 @@ const sample = handleActions(
     }),
   },
   initialState
-);
+);*/
 
 export default sample;
