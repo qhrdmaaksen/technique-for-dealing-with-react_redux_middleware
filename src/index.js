@@ -1,19 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {Provider} from "react-redux";
-import {applyMiddleware, createStore} from "redux";
-import rootReducer from "./modules";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import rootReducer, {rootSaga} from "./modules";
 import loggerMiddleware from "./lib/loggerMiddleware";
-import {createLogger} from "redux-logger/src";
-import ReduxThunk from 'redux-thunk'
+import { createLogger } from "redux-logger/src";
+import ReduxThunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
+import {composeWithDevTools} from "redux-devtools-extension";
 
-const logger = createLogger()
-const store = createStore(rootReducer, applyMiddleware(logger, ReduxThunk))
+const logger = createLogger();
+const sagaMiddleware = createSagaMiddleware();
+// 스토어에 thunk, saga, logger 미들웨어를 적용
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(logger, ReduxThunk, sagaMiddleware))
+);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+sagaMiddleware.run(rootSaga)
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <App />

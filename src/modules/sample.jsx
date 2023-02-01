@@ -5,7 +5,7 @@ import { handleActions } from "redux-actions";
 import createRequestThunk from "../lib/createRequestThunk";
 
 const GET_POST = "sample/GET_POST";
-const GET_POST_SUCCESS = 'sample/GET_POST_SUCCESS';
+const GET_POST_SUCCESS = "sample/GET_POST_SUCCESS";
 const GET_POST_FAILURE = "sample/GET_POST_FAILURE";
 
 const GET_USERS = "sample/GET_USERS";
@@ -63,7 +63,7 @@ export const getUsers = (id) => async (dispatch) => {
 const initialState = {
   post: null,
   users: null,
-}
+};
 
 /* 로딩에 대한 초기 상태를 따로 modules/loading 에서 관리하므로 아래와 같이 작성할 필요가 없어졌음
 const initialState = {
@@ -75,16 +75,19 @@ const initialState = {
   users: null,
 };*/
 
-const sample = handleActions({
-  [GET_POST_SUCCESS]: (state, action) => ({
-    ...state,
-    post: action.payload
-  }),
-  [GET_USERS_SUCCESS]: (state, action) => ({
-    ...state,
-    users: action.payload
-  })
-})
+const sample = handleActions(
+  {
+    [GET_POST_SUCCESS]: (state, action) => ({
+      ...state,
+      post: action.payload,
+    }),
+    [GET_USERS_SUCCESS]: (state, action) => ({
+      ...state,
+      users: action.payload,
+    }),
+  },
+  initialState
+);
 
 /* loading 액션 생성 함수를 modules/loading 에서 관리하므로 아래와 같이 작성할 필요가 없어졌음
 const sample = handleActions(

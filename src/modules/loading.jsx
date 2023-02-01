@@ -27,7 +27,7 @@ const loading = handleActions(
     }),
     [FINISH_LOADING]: (state, action) => ({
       ...state,
-      [action.type]: false,
+      [action.payload]: false,
     }),
   },
   initialState
