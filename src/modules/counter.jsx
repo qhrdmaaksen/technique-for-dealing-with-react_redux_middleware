@@ -1,5 +1,5 @@
 import {createAction, handleActions} from "redux-actions";
-import {delay, put, takeEvery, takeLatest} from "redux-saga/effects";
+import {throttle, delay, put, takeEvery, takeLatest, select} from "redux-saga/effects";
 
 // 액션 타입 선언
 const INCREASE = 'counter/INCREASE';
@@ -32,16 +32,23 @@ export const decreaseAsync = createAction(DECREASE_ASYNC, () => undefined)
 function* increaseSaga() {
 	yield delay(1000) // 1초를 기다립니다.
 	yield put(increase()) // 특정 액션을 디스패치 합니다.
+	/*select 를 사용해 사가 내부에서 현재 상태를 참조해 조회할 수 있음*/
+	const numberAfterIncrease = yield select(state => state.counter)
+	console.log(`현재 값은 ${numberAfterIncrease} 입니다.`)
 }
 
 function* decreaseSaga() {
 	yield delay(1000) // 1초를 기다립니다.
 	yield put(decrease()) // 특정 액션을 디스패치 합니다.
+	const numberAfterDecrease = yield select(state => state.counter)
+	console.log(`현재 값은 ${numberAfterDecrease} 입니다.`)
 }
 
 export function* counterSaga() {
 	// takeEvery 는 들어오는 모든 액션에 대해 특정 작업을 처리해 줍니다.
-	yield takeEvery(INCREASE_ASYNC, increaseSaga)
+	/*yield takeEvery(INCREASE_ASYNC, increaseSaga)*/
+	// throttle 은 특정 작업을 일정 시간 간격을 두고 한 번만 실행시켜 줌
+	yield throttle(3000, INCREASE_ASYNC, increaseSaga)
 	// takeLatest 는 기존에 진행 중이던 작업이 있다면 취소 처리하고
 	// 가장 마지막으로 실행된 작업만 수행합니다.
 	yield takeLatest(DECREASE_ASYNC, decreaseSaga)
