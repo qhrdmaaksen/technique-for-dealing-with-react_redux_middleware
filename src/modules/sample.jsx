@@ -6,6 +6,7 @@ import createRequestThunk from "../lib/createRequestThunk";
 import { finishLoading, startLoading } from "./loading";
 import { put, call } from "redux-saga/effects";
 import { takeLatest } from "redux-saga/effects";
+import createRequestSaga from "../lib/createRequestSaga";
 
 const GET_POST = "sample/GET_POST";
 const GET_POST_SUCCESS = "sample/GET_POST_SUCCESS";
@@ -22,6 +23,11 @@ const GET_USERS_FAILURE = "sample/GET_USERS_FAILURE";
 export const getPost = createAction(GET_POST, (id) => id);
 export const getUsers = createAction(GET_USERS);
 
+const getPostSaga = createRequestSaga(GET_POST, api.getPost)
+const getUsersSaga = createRequestSaga(GET_USERS, api.getUsers)
+
+
+/* createRequestSaga 를 따로 만들어 아래 코드를 대체했음
 function* getPostSaga(action) {
   yield put(startLoading(GET_POST)); // 로딩 시작
   // 파라미터로 action 을 받아오면 액션의 정보를 조회할 수 있음
@@ -61,7 +67,7 @@ function* getUsersSaga() {
     });
   }
   yield put(finishLoading(GET_USERS)); // 로딩 끝
-}
+}*/
 
 export function* sampleSaga() {
   yield takeLatest(GET_POST, getPostSaga);
